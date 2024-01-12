@@ -1,11 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Insert title here</title>
-</head>
-<body>
-	<h1>hola</h1>
-</body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Administración Empleados</title>
+        <style>
+            body {
+                background: black;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+            }
+
+            .button-container {
+                text-align: center;
+            }
+
+            a {
+                display: inline-block;
+                width: 60%;
+                padding: 11%;
+                margin-bottom: 15%;
+                color: #fff;
+                background: #007bff;
+                text-decoration: none;
+                border-radius: 5%;
+                font-size: 20px;
+            }
+
+            a:hover {
+                background: #0056b3; /* Cambia el color al pasar el mouse sobre el enlace */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="button-container">
+            <a href="crear.xhtml">Crear Empleados</a>
+            <a href="buscar.xhtml">Buscar Empleado</a>
+        </div>
+    </body>
 </html>

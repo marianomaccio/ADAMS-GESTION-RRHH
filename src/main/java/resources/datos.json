@@ -1,0 +1,28 @@
+[
+  {
+    "tipoEmpleado": "Tecnico",
+    "nif": "987654321C",
+    "nombre": "Juan",
+    "apellido": "Perez",
+    "puesto": "Ingeniero",
+    "salario": 50000.00,
+    "cualificaciones": ["Java", "C++", "SQL"]
+  },
+  {
+    "tipoEmpleado": "Ejecutivo",
+    "nif": "987654321B",
+    "nombre": "Maria",
+    "apellido": "Lopez",
+    "puesto": "Director de Ventas",
+    "salario": 80000.00
+  },
+  {
+    "tipoEmpleado": "Tecnico",
+    "nif": "555555555C",
+    "nombre": "Carlos",
+    "apellido": "Gomez",
+    "puesto": "Desarrollador",
+    "salario": 60000.00,
+    "cualificaciones": ["Python", "JavaScript", "HTML"]
+  }
+]

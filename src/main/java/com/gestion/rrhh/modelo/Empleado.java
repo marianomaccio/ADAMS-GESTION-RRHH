@@ -1,15 +1,18 @@
 package com.gestion.rrhh.modelo;
 
-import com.gestion.rrhh.modelo.tipoEmpleado.TipoEmpleado;
-import com.gestion.rrhh.servicio.CalcularSalarioServicio;
+
 
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.gestion.rrhh.modelo.tipoEmpleado.TipoEmpleado;
+import com.gestion.rrhh.servicio.CalcularSalarioServicio;
+
+
 public abstract class Empleado {
     private TipoEmpleado tipoEmpleado;
-    private String NIF;
+    private String nif;
     private String nombre;
     private String apellido;
     private String puesto;
@@ -20,9 +23,7 @@ public abstract class Empleado {
     public Empleado(TipoEmpleado tipoEmpleado, String nif, String nombre, String apellido, String puesto, BigDecimal salario) {
         try{
             this.tipoEmpleado = tipoEmpleado;
-            if(!validarNif(nif))
-                throw new IllegalArgumentException("NIF: " + nif + " INVALIDO!!");
-            NIF = nif;
+            this.nif = nif;
             this.nombre = nombre;
             this.apellido = apellido;
             this.puesto = puesto;
@@ -32,25 +33,14 @@ public abstract class Empleado {
         }
 
     }
-
-    private boolean validarNif(String nif) throws RuntimeException{
-        String patronNIF = "^[0-9XYZ][0-9]{7,8}[TRWAGMYFPDXBNJZSQVHLCKE]$";
-
-        // Compilar la expresión regular
-        Pattern patron = Pattern.compile(patronNIF);
-
-        // Crear un objeto Matcher
-        Matcher matcher = patron.matcher(nif);
-
-        // Verificar si el NIF coincide con el patrón
-        return matcher.matches();
-    }
+    
+    public Empleado() {};
 
     public TipoEmpleado getTipoEmpleado() {
         return tipoEmpleado;
     }
     public String getNif() {
-        return NIF;
+        return nif;
     }
 
     public String getNombre() {

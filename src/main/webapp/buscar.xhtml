@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Buscador de Empleados</title>
+        <style>
+            body {
+                background: black;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .form-container {
+                background: darkgray;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                max-width: 400px;
+                width: 100%;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 8px;
+                color: #333;
+            }
+
+            input {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 15px;
+                box-sizing: border-box;
+            }
+
+            .btnBuscar {
+                background: #007bff;
+                color: #fff;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 18px;
+                width: 100%;
+            }
+
+            .btnBuscar:hover {
+                background: #0056b3;
+            }
+        </style>
+        
+    </h:head>    
+    <body>    	
+        <div class="form-container">        	
+            <h:form id="busquedaForm">
+                <p:messages id="mensajes" showDetail="true" autoUpdate="true"/>
+			    <label for="nif">NIF:</label>
+			    <h:inputText id="nif" value="#{buscadorControlador.nif}" maxlength="9"/>
+                 
+
+                <label for="nombre">Nombre:</label>
+                <h:inputText id="nombre" value="#{buscadorControlador.nombre}" />
+
+                <label for="primerApellido">Apellido:</label>
+                <h:inputText id="apellido" value="#{buscadorControlador.primerApellido}" />
+
+                <label for="puesto">Puesto:</label>
+                <h:inputText id="puesto" value="#{buscadorControlador.puesto}" />
+
+                <h:commandButton class="btnBuscar" value="Buscar" action="#{buscadorControlador.buscar}" />
+            </h:form>
+        </div>
+
+    </body>
+</html>

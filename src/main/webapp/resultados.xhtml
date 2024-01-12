@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Resultados de la búsqueda</title>
+        <style>
+            body {
+                background: black;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .resultados-container {
+                background: darkgray;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                max-width: 800px;
+                width: 100%;
+            }
+
+            .resultado {
+                margin-bottom: 15px;
+                padding: 10px;
+                border: 1px solid #333;
+                border-radius: 5px;
+            }
+
+            .resultado label {
+                font-weight: bold;
+            }
+
+            .btnVolver {
+                background: #007bff;
+                color: #fff;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 18px;
+                width: 100%;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+            }
+
+            .btnVolver:hover {
+                background: #0056b3;
+            }
+        </style>
+    </h:head>
+    <body>
+        <div class="resultados-container">
+            <h3>Resultados de la búsqueda:</h3>
+            <ui:repeat value="#{buscadorControlador.resultados}" var="empleado">
+                <div class="resultado">
+                    <label>NIF:</label> #{empleado.nif}<br/>
+                    <label>Nombre:</label> #{empleado.nombre}<br/>
+                    <label>Apellido:</label> #{empleado.apellido}<br/>
+                    <label>Puesto:</label> #{empleado.puesto}<br/>
+                    <label>Salario:</label>€ #{empleado.salario}<br/>
+                    <ui:fragment rendered="#{empleado.tipoEmpleado eq 'Tecnico'}">
+			            <label>Cualificaciones:</label> 
+			            <span>
+			            	<ui:repeat value="#{empleado.cualificaciones}" var="cualificacion">
+				                #{cualificacion} -
+				            </ui:repeat>
+			            </span>
+			            
+			        </ui:fragment>
+                </div>
+            </ui:repeat>
+            <a class="btnVolver" href="buscar.xhtml">Volver a la búsqueda</a>
+        </div>
+    </body>
+</html>
