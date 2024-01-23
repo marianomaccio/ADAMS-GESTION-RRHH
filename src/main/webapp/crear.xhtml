@@ -1,43 +1,98 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-	<head>
-    <title>Administración Empleados</title>
-    <style>
-        body {
-            background: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+    <h:head>
+        <title>Buscador de Empleados</title>
+        <style>
+            body {
+                background: black;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
 
-        .button-container {
-            text-align: center;
-        }
+            .form-container {
+                background: darkgray;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                max-width: 400px;
+                width: 100%;
+            }
 
-        button {
-            width: 60%;
-            padding: 11%;
-            margin-bottom: 15%;
-            color: #fff;
-            background: #007bff;
-            border: none;
-            border-radius: 5%;
-            cursor: pointer;
-            font-size: 20px;
-        }
-        button:hover {
-            background: #0056b3; /* Cambia el color al pasar el mouse sobre el botón */
-        }
-    </style>
-</head>
-<body>
-    <div class="button-container">
-        <button href="/crear.xhtml" >Crear Empleados</button>
-    </div>
-</body>
+            label {
+                display: block;
+                margin-bottom: 8px;
+                color: #333;
+            }
+
+            input {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 15px;
+                box-sizing: border-box;
+            }
+
+            .btnBuscar, .btnAñadir, .btnCrear {
+                background: #007bff;
+                color: #fff;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 18px;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .btnBuscar:hover, .btnAñadir:hover, .btnCrear:hover,  .btnAgregar:hover{
+                background: #0056b3;
+            }
+        </style>
+    </h:head>    
+    <body>    	
+        <div class="form-container">        	
+            <h:form id="crearForm">
+                <p:messages id="mensajes" showDetail="true" autoUpdate="true"/>
+                <label for="tipoEmpleado">Tipo de Empleado:</label>
+                <h:selectOneMenu id="tipoEmpleado" value="#{creadorControlador.tipoEmpleado}">
+                	<f:selectItem itemValue="" itemLabel="-Seleccione Tipo Empleado-" onSelect="true"/>
+                    <f:selectItem itemValue="Ejecutivo" itemLabel="Ejecutivo" />
+                    <f:selectItem itemValue="Tecnico" itemLabel="Tecnico" />
+                    <f:ajax render="cualificacionesPanel" listener="#{creadorControlador.handleTipoEmpleadoChange}" />
+                </h:selectOneMenu>
+                <br></br>
+                
+                <label for="nif">NIF:</label>
+                <h:inputText id="nif" value="#{creadorControlador.nif}" maxlength="9"/>
+                 
+                <label for="nombre">Nombre:</label>
+                <h:inputText id="nombre" value="#{creadorControlador.nombre}" />
+
+                <label for="primerApellido">Apellido:</label>
+                <h:inputText id="apellido" value="#{creadorControlador.primerApellido}" />
+
+                <label for="puesto">Puesto:</label>
+                <h:inputText id="puesto" value="#{creadorControlador.puesto}" />
+                
+                <h:panelGroup id="cualificacionesPanel" style="display: #{creadorControlador.mostrarCualificaciones ? 'block' : 'none'};">
+                    <label>Cualificaciones:</label>
+                    <h:inputText value="#{creadorControlador.cualificaciones}"/>
+                    <h:commandButton class="btnAgregar" value="+" action="#{creadorControlador.agregarCualficacion}" />
+                </h:panelGroup>
+                
+                <h:outputText  value="Empleados agregados:#{creadorControlador.cantEmpleado}"/>
+                
+                <h:commandButton class="btnAñadir" value="Añadir Empleado" action="#{creadorControlador.agregar}" />
+                
+                <h:commandButton class="btnCrear" value="Crear Empleados" action="#{creadorControlador.crear}" />
+            </h:form>
+        </div>
+    </body>
 </html>
