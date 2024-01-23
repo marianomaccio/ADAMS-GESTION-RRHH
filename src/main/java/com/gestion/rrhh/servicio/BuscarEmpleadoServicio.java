@@ -45,14 +45,14 @@ public class BuscarEmpleadoServicio {
 	}
 	private List<Empleado> busquedaConNif(String nif) {
 	    JSONParser parser = new JSONParser();
-	    try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("resources/datos.json")) {
+	    try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("datos.json")) {
 	        if (inputStream != null) {
 	            InputStreamReader reader = new InputStreamReader(inputStream);
 	            Object obj = parser.parse(reader);
 	            JSONArray empleados = (JSONArray) obj;
 	            for (Object empleadoObj : empleados) {
 	                JSONObject empleadoJson = (JSONObject) empleadoObj;
-	                if (nif.equalsIgnoreCase((String)empleadoJson.get("nif"))) {
+	                if (nif.trim().equalsIgnoreCase((String)empleadoJson.get("nif"))) {
 	                    if(TipoEmpleado.Ejecutivo.name().equals(empleadoJson.get("tipoEmpleado"))){
 	                    	return List.of(new EmpleadoEjecutivo((String)empleadoJson.get("nif"), (String)empleadoJson.get("nombre"), (String)empleadoJson.get("apellido"), (String)empleadoJson.get("puesto"), new BigDecimal((Double)empleadoJson.get("salario"))));
 	                    }
@@ -71,7 +71,7 @@ public class BuscarEmpleadoServicio {
 	private List<Empleado> busquedaSinNif(String nombre, String primerApellido, String puesto) {
 		List<Empleado> lista = new  ArrayList<>();
 	    JSONParser parser = new JSONParser();
-	    try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("resources/datos.json")) {
+	    try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("datos.json")) {
 	        if (inputStream != null) {
 	            InputStreamReader reader = new InputStreamReader(inputStream);
 	            Object obj = parser.parse(reader);
@@ -79,9 +79,9 @@ public class BuscarEmpleadoServicio {
 	            for (Object empleadoObj : empleados) {
 	                JSONObject empleadoJson = (JSONObject) empleadoObj;
 
-	                if ((nombre.isEmpty() || nombre.equalsIgnoreCase((String)empleadoJson.get("nombre")))
-	                        && (primerApellido.isEmpty() || primerApellido.equalsIgnoreCase((String)empleadoJson.get("apellido")))
-	                        && (puesto.isEmpty() || puesto.equalsIgnoreCase((String)empleadoJson.get("puesto")))){
+	                if ((nombre.isEmpty() || nombre.trim().equalsIgnoreCase(((String)empleadoJson.get("nombre")).trim()))
+	                        && (primerApellido.isEmpty() || primerApellido.trim().equalsIgnoreCase(((String)empleadoJson.get("apellido")).trim()))
+	                        && (puesto.isEmpty() || puesto.trim().equalsIgnoreCase(((String)empleadoJson.get("puesto")).trim()))){
 	                	if(TipoEmpleado.Ejecutivo.name().equals(empleadoJson.get("tipoEmpleado"))){
 	                    	lista.add(new EmpleadoEjecutivo((String)empleadoJson.get("nif"), (String)empleadoJson.get("nombre"), (String)empleadoJson.get("apellido"), (String)empleadoJson.get("puesto"), new BigDecimal((Double)empleadoJson.get("salario"))));
 	                    	
