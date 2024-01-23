@@ -13,11 +13,11 @@ public class EmpleadoTecnico extends Empleado{
     private List<String> cualificaciones;
 
 
-	public EmpleadoTecnico(String nif, String nombre, String apellido, String puesto, BigDecimal salario, List cualificaciones){
+	public EmpleadoTecnico(String nif, String nombre, String apellido, String puesto, BigDecimal salario, List<String> cualificaciones){
         super(TipoEmpleado.Tecnico, nif, nombre, apellido, puesto, salario);
         this.cualificaciones=cualificaciones;
     }
-	
+
     public List<String> getCualificaciones() {
 		return cualificaciones;
 	}

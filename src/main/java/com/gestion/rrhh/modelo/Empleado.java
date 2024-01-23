@@ -3,19 +3,22 @@ package com.gestion.rrhh.modelo;
 
 
 import java.math.BigDecimal;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.gestion.rrhh.modelo.tipoEmpleado.TipoEmpleado;
 import com.gestion.rrhh.servicio.CalcularSalarioServicio;
 
 
-public abstract class Empleado {
+public class Empleado {
+
     private TipoEmpleado tipoEmpleado;
+
     private String nif;
+
     private String nombre;
+
     private String apellido;
+
     private String puesto;
+
     private BigDecimal salario;
     private Nomina nomina;
     private CalcularSalarioServicio servicio;
@@ -36,8 +39,8 @@ public abstract class Empleado {
     
     public Empleado() {};
 
-    public TipoEmpleado getTipoEmpleado() {
-        return tipoEmpleado;
+    public String getTipoEmpleado() {
+        return tipoEmpleado.name();
     }
     public String getNif() {
         return nif;
