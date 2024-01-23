@@ -8,6 +8,11 @@
         <managed-bean-class>com.gestion.rrhh.controlador.BuscadorControlador</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>CreadorControlador</managed-bean-name>
+        <managed-bean-class>com.gestion.rrhh.controlador.CreadorControlador</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 
     
 
