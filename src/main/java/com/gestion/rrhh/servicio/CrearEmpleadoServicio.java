@@ -28,11 +28,7 @@ public class CrearEmpleadoServicio {
 			InputStreamReader reader = new InputStreamReader(inputStream);
 			Object obj = parser.parse(reader);
 			JSONArray empleadosJson = (JSONArray) obj;
-			if(empleadosJson.isEmpty() && empleados.size() <5) {
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error:", "Agregar 5 empleados minimo");
-				facesContext.addMessage("crearForm:mensajes", message);
-				return false;
-			}
+
 			for(Empleado empleado : empleados) {
 				JSONObject object = new JSONObject();
 				EmpleadoTecnico empleadoTec;
@@ -52,8 +48,12 @@ public class CrearEmpleadoServicio {
 
 
 			fileWriter.write(empleadosJson.toJSONString());
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Creacion:", "Correcta.");
-			facesContext.addMessage("crearForm:mensajes", message);
+			if(facesContext != null){
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Creacion:", "Correcta.");
+				facesContext.addMessage("crearForm:mensajes", message);
+			}else{
+				System.out.println("Creacion Correcta!");
+			}
 			return true;
 		} catch (ParseException e) {
 			e.printStackTrace();

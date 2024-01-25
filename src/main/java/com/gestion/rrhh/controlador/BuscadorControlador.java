@@ -35,15 +35,24 @@ public class BuscadorControlador {
         
         try {
         	resultados = buscarEmpleadoServicio.buscar(nombre, primerApellido, nif, puesto);
-	        if(!resultados.isEmpty()) {
-		        ExternalContext externalContext = facesContext.getExternalContext();		        
-		        externalContext.getFlash().put("resultados", resultados);
-		        externalContext.redirect("resultados.xhtml");
+	        if(resultados.size() > 0) {
+	        	if(facesContext != null) {
+					ExternalContext externalContext = facesContext.getExternalContext();
+					externalContext.getFlash().put("resultados", resultados);
+					externalContext.redirect("resultados.xhtml");
+				}else{
+	        		for(Empleado empleado : resultados)
+	        			System.out.println(empleado.toString()+"\n");
+				}
 		        
 		        
 	        }else {
-	        	FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Busqueda:", "No se han encontrado resultados");
-                facesContext.addMessage("busquedaForm:mensajes", message);
+				if(facesContext != null) {
+					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Busqueda:", "No se han encontrado resultados");
+					facesContext.addMessage("busquedaForm:mensajes", message);
+				}else{
+					System.out.println("No se han encontrado resultados");
+				}
 	        }
         } catch (Exception e) {
            e.printStackTrace();

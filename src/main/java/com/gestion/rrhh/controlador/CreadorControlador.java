@@ -43,48 +43,52 @@ public class CreadorControlador {
 	
 	private String tipoEmpleado;
 	
-	private int cantEmpleado;
-	
 	private boolean mostrarCualificaciones = false;
 
 	private List<String> cualif = new ArrayList<>();
 	
-	public void agregar() {
+	public boolean agregar() {
 		
 		if(validarEmpleado()){
 			if ("Tecnico".equals(tipoEmpleado)) {
-				if(!cualificaciones.isEmpty())
-					cualif.add(cualificaciones);
+				agregarCualficacion();
 				empleado.add(new EmpleadoTecnico(nif, nombre, primerApellido, puesto, salario, cualif));
-				cantEmpleado++;
 				limpiarCampos();
 	        }else if("Ejecutivo".equals(tipoEmpleado)) {
 				empleado.add(new EmpleadoEjecutivo(nif, nombre, primerApellido, puesto, salario));
-				cantEmpleado++;
 				limpiarCampos();
 	        }
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Empleado Agregado", "Empleado agregado.");
-            facesContext.addMessage("crearForm:mensajes", message);
-	        
+			if(facesContext != null){
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Empleado Agregado", "Empleado agregado.");
+				facesContext.addMessage("crearForm:mensajes", message);
+			}else{
+				System.out.println("Empleado agregado.");
+			}
+			return true;
+
 		}
-		
+		return false;
+
         
     }
 
     public void crear() throws URISyntaxException, IOException {
     	FacesContext facesContext = FacesContext.getCurrentInstance();
-    	if(validarEmpleado())
+    	if(facesContext != null)
 			agregar();
     	if(!empleado.isEmpty()){
 			if (creadorServicio.crear(empleado)) {
 				empleado.clear();
-				cantEmpleado = 0;
 				limpiarCampos();
 			}
 		}else{
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error:", "No se ha agregado ningun empleado.");
-			facesContext.addMessage("crearForm:mensajes", message);
+			if(facesContext != null) {
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error:", "No se ha agregado ningun empleado.");
+				facesContext.addMessage("crearForm:mensajes", message);
+			}else{
+				System.out.println("No se ha agregado ningun empleado.");
+			}
 		}
     }
 
@@ -95,7 +99,6 @@ public class CreadorControlador {
 	}
 
     public void handleTipoEmpleadoChange() {
-        // Manejar el cambio de tipo de empleado y establecer mostrarCualificaciones en consecuencia
         setMostrarCualificaciones("Tecnico".equals(tipoEmpleado));
     }
 
@@ -109,8 +112,12 @@ public class CreadorControlador {
 			resultado = false;
 		}
     	if(nombre.isEmpty()) {
-    		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Nombre Obligatorio:", "Debe rellenar el nombre.");
-            facesContext.addMessage("crearForm:mensajes", message);
+    		if(facesContext != null) {
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Nombre Obligatorio:", "Debe rellenar el nombre.");
+				facesContext.addMessage("crearForm:mensajes", message);
+			}else{
+    			System.out.println("Debe rellenar el nombre.");
+			}
             resultado = false;
     	}
     	if(primerApellido.isEmpty()) {
@@ -119,17 +126,29 @@ public class CreadorControlador {
             resultado = false;
     	}
     	if(nif.isEmpty()) {
-    		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "NIF Obligatorio:", "Debe rellenar el nif.");
-            facesContext.addMessage("crearForm:mensajes", message);
+			if(facesContext != null) {
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "NIF Obligatorio:", "Debe rellenar el nif.");
+				facesContext.addMessage("crearForm:mensajes", message);
+			}else{
+				System.out.println("Debe rellenar el nif.");
+			}
             resultado = false;
     	}else if(!validarNif()) {
-    		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "NIF Incorrecto:", "El Nif no es valido.");
-            facesContext.addMessage("crearForm:mensajes", message);
+			if(facesContext != null) {
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "NIF Incorrecto:", "El Nif no es valido.");
+				facesContext.addMessage("crearForm:mensajes", message);
+			}else{
+				System.out.println("El Nif no es valido.");
+			}
             resultado = false;
     	}
     	if(puesto.isEmpty()) {
-    		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Puesto Obligatorio:", "Debe rellenar el puesto.");
-            facesContext.addMessage("crearForm:mensajes", message);
+			if(facesContext != null) {
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Puesto Obligatorio:", "Debe rellenar el puesto.");
+				facesContext.addMessage("crearForm:mensajes", message);
+			}else{
+				System.out.println("Debe rellenar el puesto.");
+			}
             resultado = false;
     	}
 
@@ -160,6 +179,10 @@ public class CreadorControlador {
     
     public List<Empleado> getEmpleado() {
 		return empleado;
+	}
+
+	public void limpiarListaEmpleado() {
+		empleado = new ArrayList<>();
 	}
 
 	public void setEmpleado(List<Empleado> empleado) {
@@ -229,15 +252,6 @@ public class CreadorControlador {
 	public void setMostrarCualificaciones(boolean mostrarCualificaciones) {
 		this.mostrarCualificaciones = mostrarCualificaciones;
 	}
-
-	public int getCantEmpleado() {
-		return cantEmpleado;
-	}
-
-	public void setCantEmpleado(int cantEmpleado) {
-		this.cantEmpleado = cantEmpleado;
-	}
-
 
     
 }

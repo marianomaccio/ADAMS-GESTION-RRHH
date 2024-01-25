@@ -35,4 +35,15 @@ public class EmpleadoTecnico extends Empleado{
 	public double getSalarioNeto() {
 		return Math.round(super.getNomina().getSalarioNeto() * 100.0) / 100.0;
 	}
+
+	@Override
+	public String toString(){
+		return "NIF: " + getNif() +
+				"\nNombre: " + getNombre() +
+				"\nApellido: " +getApellido() +
+				"\nPuesto: " + getPuesto() +
+				"\nSalario Neto:€ " + getSalarioNeto() +
+				"\nCualificaciones: " + getCualificaciones() +
+				"\nNomina Actual: " + getDetalleNomina();
+	}
 }

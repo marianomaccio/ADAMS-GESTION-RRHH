@@ -1,7 +1,6 @@
 package com.gestion.rrhh.modelo;
 
 
-import java.math.BigDecimal;
 import java.util.Random;
 
 import com.gestion.rrhh.modelo.tipoEmpleado.TipoEmpleado;
@@ -32,5 +31,15 @@ public class EmpleadoEjecutivo extends Empleado{
     @Override
     public double getSalarioNeto() {
         return Math.round((super.getNomina().getSalarioNeto()+ comisionesAnuales / 12) * 100.0) / 100.0;
+    }
+
+    @Override
+    public String toString(){
+        return "NIF: " + getNif() +
+                "\nNombre: " + getNombre() +
+                "\nApellido: " +getApellido() +
+                "\nPuesto: " + getPuesto() +
+                "\nSalario Neto:€ " + getSalarioNeto() +
+                "\nNomina Actual: " + getDetalleNomina();
     }
 }

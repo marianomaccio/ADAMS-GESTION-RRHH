@@ -30,13 +30,17 @@ public class BuscarEmpleadoServicio {
 
 	public List<Empleado> buscar(String nombre, String primerApellido, String nif, String puesto) throws Exception {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
+		if(nif == null) nif= "" ;
 		if(!nif.isEmpty()) {
-			if(!validarNif(nif)) {
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error:", "NIF incorrecto");
-                facesContext.addMessage("busquedaForm:mensajes", message);
+			if(!validarNif(nif.toUpperCase())) {
+				if(facesContext != null){
+					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error:", "NIF incorrecto");
+					facesContext.addMessage("busquedaForm:mensajes", message);
+				}else{
+					System.out.println("NIF incorrecto");
+				}
 			}else {
 				return busquedaConNif(nif);
-				
 			}
 		}else{
 			return busquedaSinNif(nombre, primerApellido, puesto);
@@ -47,7 +51,7 @@ public class BuscarEmpleadoServicio {
 	private List<Empleado> busquedaConNif(String nif) {
 	    JSONParser parser = new JSONParser();
 	    try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("datos.json")) {
-	        if (inputStream != null) {
+	        if (inputStream != null && inputStream.read() != -1) {
 	            InputStreamReader reader = new InputStreamReader(inputStream);
 	            Object obj = parser.parse(reader);
 	            JSONArray empleados = (JSONArray) obj;
@@ -73,16 +77,16 @@ public class BuscarEmpleadoServicio {
 		List<Empleado> lista = new  ArrayList<>();
 	    JSONParser parser = new JSONParser();
 	    try (InputStream inputStream = new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\resources\\datos.json")) {
-	        if (inputStream != null) {
+	        if (inputStream != null && inputStream.read() != -1) {
 	            InputStreamReader reader = new InputStreamReader(inputStream);
 	            Object obj = parser.parse(reader);
 	            JSONArray empleados = (JSONArray) obj;
 	            for (Object empleadoObj : empleados) {
 	                JSONObject empleadoJson = (JSONObject) empleadoObj;
 
-	                if ((nombre.isEmpty() || nombre.trim().equalsIgnoreCase(((String)empleadoJson.get("nombre")).trim()))
-	                        && (primerApellido.isEmpty() || primerApellido.trim().equalsIgnoreCase(((String)empleadoJson.get("apellido")).trim()))
-	                        && (puesto.isEmpty() || puesto.trim().equalsIgnoreCase(((String)empleadoJson.get("puesto")).trim()))){
+	                if ((nombre.trim().equals("") || nombre.trim().equalsIgnoreCase(((String)empleadoJson.get("nombre")).trim()))
+	                        && (primerApellido.trim().equals("") || primerApellido.trim().equalsIgnoreCase(((String)empleadoJson.get("apellido")).trim()))
+	                        && (puesto.trim().equals("") || puesto.trim().equalsIgnoreCase(((String)empleadoJson.get("puesto")).trim()))){
 	                	if(TipoEmpleado.Ejecutivo.name().equals(empleadoJson.get("tipoEmpleado"))){
 	                    	lista.add(new EmpleadoEjecutivo((String)empleadoJson.get("nif"), (String)empleadoJson.get("nombre"), (String)empleadoJson.get("apellido"), (String)empleadoJson.get("puesto"), (Double)empleadoJson.get("salario")));
 	                    	

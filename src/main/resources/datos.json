@@ -1,7 +1,7 @@
 [
   {
     "tipoEmpleado": "Tecnico",
-    "nif": "987654321C",
+    "nif": "87654321C",
     "nombre": "Juan",
     "apellido": "Perez",
     "puesto": "Ingeniero",
@@ -10,7 +10,7 @@
   },
   {
     "tipoEmpleado": "Ejecutivo",
-    "nif": "987654321B",
+    "nif": "98654321B",
     "nombre": "Maria",
     "apellido": "Lopez",
     "puesto": "Director de Ventas",
@@ -18,7 +18,7 @@
   },
   {
     "tipoEmpleado": "Tecnico",
-    "nif": "555555555C",
+    "nif": "55555555C",
     "nombre": "Carlos",
     "apellido": "Gomez",
     "puesto": "Desarrollador",
