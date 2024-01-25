@@ -1,6 +1,7 @@
 package com.gestion.rrhh.controlador;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;

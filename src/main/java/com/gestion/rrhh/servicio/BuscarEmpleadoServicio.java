@@ -1,6 +1,7 @@
 package com.gestion.rrhh.servicio;
 
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -54,10 +55,10 @@ public class BuscarEmpleadoServicio {
 	                JSONObject empleadoJson = (JSONObject) empleadoObj;
 	                if (nif.trim().equalsIgnoreCase((String)empleadoJson.get("nif"))) {
 	                    if(TipoEmpleado.Ejecutivo.name().equals(empleadoJson.get("tipoEmpleado"))){
-	                    	return List.of(new EmpleadoEjecutivo((String)empleadoJson.get("nif"), (String)empleadoJson.get("nombre"), (String)empleadoJson.get("apellido"), (String)empleadoJson.get("puesto"), new BigDecimal((Double)empleadoJson.get("salario"))));
+	                    	return List.of(new EmpleadoEjecutivo((String)empleadoJson.get("nif"), (String)empleadoJson.get("nombre"), (String)empleadoJson.get("apellido"), (String)empleadoJson.get("puesto"), (Double)empleadoJson.get("salario")));
 	                    }
 	                    if(TipoEmpleado.Tecnico.name().equals(empleadoJson.get("tipoEmpleado"))){
-	                    	return List.of(new EmpleadoTecnico((String)empleadoJson.get("nif"), (String)empleadoJson.get("nombre"), (String)empleadoJson.get("apellido"), (String)empleadoJson.get("puesto"), new BigDecimal((Double)empleadoJson.get("salario")), (JSONArray)empleadoJson.get("cualificaciones")));
+	                    	return List.of(new EmpleadoTecnico((String)empleadoJson.get("nif"), (String)empleadoJson.get("nombre"), (String)empleadoJson.get("apellido"), (String)empleadoJson.get("puesto"), (Double)empleadoJson.get("salario"), (JSONArray)empleadoJson.get("cualificaciones")));
 	                    	
 	                    }
 	                }
@@ -71,7 +72,7 @@ public class BuscarEmpleadoServicio {
 	private List<Empleado> busquedaSinNif(String nombre, String primerApellido, String puesto) {
 		List<Empleado> lista = new  ArrayList<>();
 	    JSONParser parser = new JSONParser();
-	    try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("datos.json")) {
+	    try (InputStream inputStream = new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\resources\\datos.json")) {
 	        if (inputStream != null) {
 	            InputStreamReader reader = new InputStreamReader(inputStream);
 	            Object obj = parser.parse(reader);
@@ -83,11 +84,11 @@ public class BuscarEmpleadoServicio {
 	                        && (primerApellido.isEmpty() || primerApellido.trim().equalsIgnoreCase(((String)empleadoJson.get("apellido")).trim()))
 	                        && (puesto.isEmpty() || puesto.trim().equalsIgnoreCase(((String)empleadoJson.get("puesto")).trim()))){
 	                	if(TipoEmpleado.Ejecutivo.name().equals(empleadoJson.get("tipoEmpleado"))){
-	                    	lista.add(new EmpleadoEjecutivo((String)empleadoJson.get("nif"), (String)empleadoJson.get("nombre"), (String)empleadoJson.get("apellido"), (String)empleadoJson.get("puesto"), new BigDecimal((Double)empleadoJson.get("salario"))));
+	                    	lista.add(new EmpleadoEjecutivo((String)empleadoJson.get("nif"), (String)empleadoJson.get("nombre"), (String)empleadoJson.get("apellido"), (String)empleadoJson.get("puesto"), (Double)empleadoJson.get("salario")));
 	                    	
 	                    }
 	                    if(TipoEmpleado.Tecnico.name().equals(empleadoJson.get("tipoEmpleado"))){
-	                    	lista.add( new EmpleadoTecnico((String)empleadoJson.get("nif"), (String)empleadoJson.get("nombre"), (String)empleadoJson.get("apellido"), (String)empleadoJson.get("puesto"), new BigDecimal((Double)empleadoJson.get("salario")), (JSONArray)empleadoJson.get("cualificaciones")));
+	                    	lista.add( new EmpleadoTecnico((String)empleadoJson.get("nif"), (String)empleadoJson.get("nombre"), (String)empleadoJson.get("apellido"), (String)empleadoJson.get("puesto"), (Double)empleadoJson.get("salario"), (JSONArray)empleadoJson.get("cualificaciones")));
 	                    	
 	                    }
 	                }

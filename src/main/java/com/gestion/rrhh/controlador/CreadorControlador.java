@@ -35,7 +35,7 @@ public class CreadorControlador {
 	
 	private String nif;
 	
-	private BigDecimal salario;
+	private double salario;
 	
 	private String puesto;
 	
@@ -74,13 +74,18 @@ public class CreadorControlador {
 
     public void crear() throws URISyntaxException, IOException {
     	FacesContext facesContext = FacesContext.getCurrentInstance();
-    	
-    	if(creadorServicio.crear(empleado)){
-    		empleado.clear();
-    		cantEmpleado = 0;
-        	limpiarCampos();
-    	}
-    	
+    	if(validarEmpleado())
+			agregar();
+    	if(!empleado.isEmpty()){
+			if (creadorServicio.crear(empleado)) {
+				empleado.clear();
+				cantEmpleado = 0;
+				limpiarCampos();
+			}
+		}else{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error:", "No se ha agregado ningun empleado.");
+			facesContext.addMessage("crearForm:mensajes", message);
+		}
     }
 
     public void agregarCualficacion(){
@@ -93,11 +98,16 @@ public class CreadorControlador {
         // Manejar el cambio de tipo de empleado y establecer mostrarCualificaciones en consecuencia
         setMostrarCualificaciones("Tecnico".equals(tipoEmpleado));
     }
-    
+
     private boolean validarEmpleado(){
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		boolean resultado = true;
+		if(tipoEmpleado.isEmpty()) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Tipo Empleado Obligatorio:", "Debe rellenar el Tipo de Empleado.");
+			facesContext.addMessage("crearForm:mensajes", message);
+			resultado = false;
+		}
     	if(nombre.isEmpty()) {
     		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Nombre Obligatorio:", "Debe rellenar el nombre.");
             facesContext.addMessage("crearForm:mensajes", message);
@@ -122,9 +132,9 @@ public class CreadorControlador {
             facesContext.addMessage("crearForm:mensajes", message);
             resultado = false;
     	}
-    	
+
     	return resultado;
-    	
+
     }
 
     private boolean validarNif() throws RuntimeException{
@@ -141,7 +151,7 @@ public class CreadorControlador {
         nombre = null;
         primerApellido = null;
         nif = null;
-        salario = null;
+        salario = 0.0;
         puesto = null;
         cualificaciones = null;
         tipoEmpleado = null;
@@ -180,11 +190,11 @@ public class CreadorControlador {
 		this.nif = nif;
 	}
 
-	public BigDecimal getSalario() {
+	public double getSalario() {
 		return salario;
 	}
 
-	public void setSalario(BigDecimal salario) {
+	public void setSalario(double salario) {
 		this.salario = salario;
 	}
 

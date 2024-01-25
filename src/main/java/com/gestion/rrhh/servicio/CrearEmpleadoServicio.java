@@ -41,7 +41,8 @@ public class CrearEmpleadoServicio {
 				object.put("nombre", empleado.getNombre());
 				object.put("apellido", empleado.getApellido());
 				object.put("puesto", empleado.getPuesto());
-				object.put("salario", 10000.0);
+				object.put("salario", empleado.getSalarioNeto());
+				object.put("nomina", empleado.getDetalleNomina());
 				if(empleado.getTipoEmpleado().equals(TipoEmpleado.Tecnico.name())) {
 					empleadoTec=(EmpleadoTecnico) empleado;
 					object.put("cualificaciones", empleadoTec.getCualificaciones());

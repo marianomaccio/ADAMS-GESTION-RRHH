@@ -13,7 +13,7 @@ public class EmpleadoTecnico extends Empleado{
     private List<String> cualificaciones;
 
 
-	public EmpleadoTecnico(String nif, String nombre, String apellido, String puesto, BigDecimal salario, List<String> cualificaciones){
+	public EmpleadoTecnico(String nif, String nombre, String apellido, String puesto, double salario, List<String> cualificaciones){
         super(TipoEmpleado.Tecnico, nif, nombre, apellido, puesto, salario);
         this.cualificaciones=cualificaciones;
     }
@@ -24,5 +24,15 @@ public class EmpleadoTecnico extends Empleado{
 
 	public void setCualificaciones(List<String> cualificaciones) {
 		this.cualificaciones = cualificaciones;
+	}
+
+	@Override
+	public String getDetalleNomina() {
+		return super.getNomina().obtenerDetalle();
+	}
+
+	@Override
+	public double getSalarioNeto() {
+		return Math.round(super.getNomina().getSalarioNeto() * 100.0) / 100.0;
 	}
 }

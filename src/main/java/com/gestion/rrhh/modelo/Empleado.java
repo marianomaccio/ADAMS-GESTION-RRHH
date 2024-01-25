@@ -4,10 +4,9 @@ package com.gestion.rrhh.modelo;
 
 import java.math.BigDecimal;
 import com.gestion.rrhh.modelo.tipoEmpleado.TipoEmpleado;
-import com.gestion.rrhh.servicio.CalcularSalarioServicio;
 
 
-public class Empleado {
+public abstract class Empleado {
 
     private TipoEmpleado tipoEmpleado;
 
@@ -19,18 +18,19 @@ public class Empleado {
 
     private String puesto;
 
-    private BigDecimal salario;
-    private Nomina nomina;
-    private CalcularSalarioServicio servicio;
+    private double salarioBruto;
 
-    public Empleado(TipoEmpleado tipoEmpleado, String nif, String nombre, String apellido, String puesto, BigDecimal salario) {
+    private Nomina nomina;
+
+    public Empleado(TipoEmpleado tipoEmpleado, String nif, String nombre, String apellido, String puesto, double salarioBruto) {
         try{
             this.tipoEmpleado = tipoEmpleado;
             this.nif = nif;
             this.nombre = nombre;
             this.apellido = apellido;
             this.puesto = puesto;
-            this.salario = salario;
+            this.salarioBruto = salarioBruto;
+            nomina=new Nomina(salarioBruto);
         }catch (IllegalArgumentException e) {
             System.err.println("Error: " + e.getMessage());
         }
@@ -70,12 +70,12 @@ public class Empleado {
         this.puesto = puesto;
     }
 
-    public BigDecimal getSalario() {
-        return salario;
+    public double getSalarioBruto() {
+        return salarioBruto;
     }
 
-    public void setSalario(BigDecimal salario) {
-        this.salario = salario;
+    public void setSalarioBruto(double salarioBruto) {
+        this.salarioBruto = salarioBruto;
     }
 
     public Nomina getNomina() {
@@ -86,13 +86,10 @@ public class Empleado {
         this.nomina = nomina;
     }
 
-    public CalcularSalarioServicio getServicio() {
-        return servicio;
-    }
+    public abstract String getDetalleNomina();
 
-    public void setServicio(CalcularSalarioServicio servicio) {
-        this.servicio = servicio;
-    }
+    public abstract double getSalarioNeto();
+
 
 
 }

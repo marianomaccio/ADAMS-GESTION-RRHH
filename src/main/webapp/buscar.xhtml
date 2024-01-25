@@ -49,6 +49,19 @@
                 font-size: 18px;
                 width: 100%;
             }
+            .btnVolver {
+                background: #007bff;
+                color: #fff;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 18px;
+                width: 100%;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+            }
 
             .btnBuscar:hover {
                 background: #0056b3;
@@ -62,7 +75,6 @@
                 <p:messages id="mensajes" showDetail="true" autoUpdate="true"/>
 			    <label for="nif">NIF:</label>
 			    <h:inputText id="nif" value="#{buscadorControlador.nif}" maxlength="9"/>
-                 
 
                 <label for="nombre">Nombre:</label>
                 <h:inputText id="nombre" value="#{buscadorControlador.nombre}" />
@@ -74,6 +86,8 @@
                 <h:inputText id="puesto" value="#{buscadorControlador.puesto}" />
 
                 <h:commandButton class="btnBuscar" value="Buscar" action="#{buscadorControlador.buscar}" />
+                
+                <a class="btnVolver" href="index.xhtml">Volver al Menú</a>
             </h:form>
         </div>
 

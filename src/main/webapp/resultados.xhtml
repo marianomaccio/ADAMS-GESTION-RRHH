@@ -66,16 +66,16 @@
                     <label>Nombre:</label> #{empleado.nombre}<br/>
                     <label>Apellido:</label> #{empleado.apellido}<br/>
                     <label>Puesto:</label> #{empleado.puesto}<br/>
-                    <label>Salario:</label>€ #{empleado.salario}<br/>
+                    <label>Salario Neto:</label>€ #{empleado.getSalarioNeto()}<br/>
                     <ui:fragment rendered="#{empleado.tipoEmpleado eq 'Tecnico'}">
 			            <label>Cualificaciones:</label> 
 			            <span>
 			            	<ui:repeat value="#{empleado.cualificaciones}" var="cualificacion">
 				                #{cualificacion} -
 				            </ui:repeat>
-			            </span>
-			            
-			        </ui:fragment>
+			            </span><br/>
+                    </ui:fragment>
+                    <label>Nomina Actual:</label> #{empleado.getDetalleNomina()}
                 </div>
             </ui:repeat>
             <a class="btnVolver" href="buscar.xhtml">Volver a la búsqueda</a>

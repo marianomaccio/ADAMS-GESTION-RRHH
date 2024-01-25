@@ -38,8 +38,21 @@
                 margin-bottom: 15px;
                 box-sizing: border-box;
             }
+            .btnVolver {
+                background: #007bff;
+                color: #fff;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 18px;
+                width: 100%;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+            }
 
-            .btnBuscar, .btnAñadir, .btnCrear {
+            .btnBuscar, .btnCrear {
                 background: #007bff;
                 color: #fff;
                 padding: 10px 15px;
@@ -51,7 +64,7 @@
                 margin-bottom: 10px;
             }
 
-            .btnBuscar:hover, .btnAñadir:hover, .btnCrear:hover,  .btnAgregar:hover{
+            .btnBuscar:hover, .btnCrear:hover,  .btnAgregar:hover{
                 background: #0056b3;
             }
         </style>
@@ -78,20 +91,21 @@
                 <label for="primerApellido">Apellido:</label>
                 <h:inputText id="apellido" value="#{creadorControlador.primerApellido}" />
 
+                <label for="puesto">Salario Base:</label>
+                <h:inputText id="salario" value="#{creadorControlador.salario}" />
+
                 <label for="puesto">Puesto:</label>
                 <h:inputText id="puesto" value="#{creadorControlador.puesto}" />
-                
+
                 <h:panelGroup id="cualificacionesPanel" style="display: #{creadorControlador.mostrarCualificaciones ? 'block' : 'none'};">
                     <label>Cualificaciones:</label>
                     <h:inputText value="#{creadorControlador.cualificaciones}"/>
                     <h:commandButton class="btnAgregar" value="+" action="#{creadorControlador.agregarCualficacion}" />
                 </h:panelGroup>
-                
-                <h:outputText  value="Empleados agregados:#{creadorControlador.cantEmpleado}"/>
-                
-                <h:commandButton class="btnAñadir" value="Añadir Empleado" action="#{creadorControlador.agregar}" />
-                
-                <h:commandButton class="btnCrear" value="Crear Empleados" action="#{creadorControlador.crear}" />
+
+                <h:commandButton class="btnCrear" value="Crear Empleado" action="#{creadorControlador.crear}" />
+
+                <a class="btnVolver" href="index.xhtml">Volver al Menú</a>
             </h:form>
         </div>
     </body>

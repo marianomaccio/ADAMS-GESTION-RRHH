@@ -34,3 +34,9 @@ build/
 ### Mac OS ###
 .DS_Store
 /.metadata/
+/.idea/
+/.metadata/
+/.settings/
+/conf/
+/logs/
+/work/
