@@ -51,7 +51,7 @@ public class BuscarEmpleadoServicio {
 	private List<Empleado> busquedaConNif(String nif) {
 	    JSONParser parser = new JSONParser();
 	    try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("datos.json")) {
-	        if (inputStream != null && inputStream.read() != -1) {
+	        if (inputStream != null && inputStream.available() > 0) {
 	            InputStreamReader reader = new InputStreamReader(inputStream);
 	            Object obj = parser.parse(reader);
 	            JSONArray empleados = (JSONArray) obj;
@@ -74,10 +74,16 @@ public class BuscarEmpleadoServicio {
 	    return new ArrayList<Empleado>();
 	}
 	private List<Empleado> busquedaSinNif(String nombre, String primerApellido, String puesto) {
+		if(nombre == null)
+			nombre = "";
+		if(primerApellido == null)
+			primerApellido = "";
+		if(puesto == null)
+			puesto = "";
 		List<Empleado> lista = new  ArrayList<>();
 	    JSONParser parser = new JSONParser();
 	    try (InputStream inputStream = new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\resources\\datos.json")) {
-	        if (inputStream != null && inputStream.read() != -1) {
+	        if (inputStream != null && inputStream.available() > 0) {
 	            InputStreamReader reader = new InputStreamReader(inputStream);
 	            Object obj = parser.parse(reader);
 	            JSONArray empleados = (JSONArray) obj;

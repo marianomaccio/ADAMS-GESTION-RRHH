@@ -89,6 +89,8 @@ public class Inicializador {
                 }
             }catch (InputMismatchException | URISyntaxException | IOException e){
                 System.out.println("Error: Solo se pueden ingresar Numeros!");
+                empleadoEjecutivo = 0;
+                empleadoTecnico = 0;
                 sc.next();
                 continue;
             }

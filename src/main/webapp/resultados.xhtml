@@ -58,6 +58,7 @@
     </h:head>
     <body>
         <div class="resultados-container">
+            <p:messages id="mensajesResultado" showDetail="true" autoUpdate="true"/>
             <h3>Resultados de la búsqueda:</h3>
             <ui:repeat value="#{buscadorControlador.resultados}" var="empleado">
                 <div class="resultado">

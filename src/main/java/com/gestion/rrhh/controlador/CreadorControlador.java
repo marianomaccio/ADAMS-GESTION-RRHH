@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,19 +49,29 @@ public class CreadorControlador {
 	private List<String> cualif = new ArrayList<>();
 	
 	public boolean agregar() {
-		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		for(Empleado empl : empleado){
+			if(empl.getNif().equalsIgnoreCase(nif)){
+				if(facesContext != null){
+					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Empleado Agregado:", "Ya se ha agregado un Empleado con este Nif: " + nif);
+					facesContext.addMessage("crearForm:mensajes", message);
+				}else{
+					System.out.println("Ya se ha agregado un Empleado con este Nif: " + nif);
+				}
+				return false;
+			}
+		}
 		if(validarEmpleado()){
 			if ("Tecnico".equals(tipoEmpleado)) {
 				agregarCualficacion();
-				empleado.add(new EmpleadoTecnico(nif, nombre, primerApellido, puesto, salario, cualif));
+				empleado.add(new EmpleadoTecnico(nif.toUpperCase(), nombre, primerApellido, puesto, salario, cualif));
 				limpiarCampos();
 	        }else if("Ejecutivo".equals(tipoEmpleado)) {
-				empleado.add(new EmpleadoEjecutivo(nif, nombre, primerApellido, puesto, salario));
+				empleado.add(new EmpleadoEjecutivo(nif.toUpperCase(), nombre, primerApellido, puesto, salario));
 				limpiarCampos();
 	        }
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			if(facesContext != null){
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Empleado Agregado", "Empleado agregado.");
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Empleado Agregado:", "Empleado agregado.");
 				facesContext.addMessage("crearForm:mensajes", message);
 			}else{
 				System.out.println("Empleado agregado.");
@@ -75,12 +86,14 @@ public class CreadorControlador {
 
     public void crear() throws URISyntaxException, IOException {
     	FacesContext facesContext = FacesContext.getCurrentInstance();
-    	if(facesContext != null)
+		if (facesContext != null) {
 			agregar();
+		}
     	if(!empleado.isEmpty()){
 			if (creadorServicio.crear(empleado)) {
 				empleado.clear();
 				limpiarCampos();
+
 			}
 		}else{
 			if(facesContext != null) {
